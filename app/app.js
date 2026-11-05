@@ -1,5 +1,6 @@
 const form = document.querySelector('#form');
 const box = document.querySelector('.box');
+const filter = document.querySelector('#filter');
 let title
 let priority
 let tickets = []
@@ -13,7 +14,7 @@ form.addEventListener('submit', (e) => {
         `<div class="quest">
         <p id="quest-title">${newTicket.title}</p>
         <p id="quest-priority">${newTicket.priority}</p>
-        <select onselect="changeStatus(${newTicket.id})" id="status" name="status" value="${newTicket.status}" required>
+        <select onchange="changeStatus(${newTicket.id})" id="status" name="status" value="${newTicket.status}" required>
             <option value="new">new</option>
             <option value="doing">doing</option>
             <option value="done">done</option>
@@ -40,14 +41,15 @@ const addTicket = (title, priority) => {
     return tickets[tickets.length - 1]
 }
 
-
-
 const changeStatus = (id) => {
-    tickets.find(ticket => ticket.id === id)
-    //tu trzeba dokonczyc
+    const status = document.querySelectorAll(`#status`)[id - 1].value
+    tickets[id - 1].status = status
+
 }
 
 
+const filterTickets = (status) => {
 
+}
 
 
