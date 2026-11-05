@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <form id="form">
+      <label for="title">Tytuł questa: </label>
+      <input type="text" id="title" name="title" required />
+      <label for="priority">Wybierz priorytet: </label>
+      <select id="priority" name="priority" required>
+        <option value="low">Low</option>
+        <option value="medium">Normal</option>
+        <option value="high">High</option>
+      </select>
+      <button type="submit">Add</button>
+      <select id="filter" name="filter">
+        <option value="all">All</option>
+        <option value="new">New</option>
+        <option value="doing">Doing</option>
+        <option value="done">Done</option>
+      </select>
+    </form>
+
+    <div class="box"></div>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
