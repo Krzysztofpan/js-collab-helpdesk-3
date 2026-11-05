@@ -1,6 +1,8 @@
 const form = document.querySelector('#form');
 const box = document.querySelector('.box');
 const filter = document.querySelector('#filter');
+const counter = document.querySelector('#counter')
+let filteredTickets;
 let title
 let priority
 let tickets = []
@@ -10,17 +12,24 @@ form.addEventListener('submit', (e) => {
     title = e.target.title.value
     priority = e.target.priority.value
     const newTicket = addTicket(title, priority)
-    box.innerHTML +=
-        `<div class="quest">
-        <p id="quest-title">${newTicket.title}</p>
-        <p id="quest-priority">${newTicket.priority}</p>
-        <select onchange="changeStatus(${newTicket.id})" id="status" name="status" value="${newTicket.status}" required>
-            <option value="new">new</option>
-            <option value="doing">doing</option>
-            <option value="done">done</option>
-        </select>
-    </div>`
+    filter.value = 'all'
+    box.innerHTML = tickets.map((ticket) => 
+        {
+            return (
+            `<div class="quest">
+                <p id="quest-title">${ticket.title}</p>
+                <p id="quest-priority">${ticket.priority}</p>
+                <select onchange="changeStatus(${ticket.id})" id="status" name="status" value="${ticket.status}">
+                    <option  value="new">new</option>
+                    <option  value="doing">doing</option>
+                    <option  value="done">done</option>
+                </select>
+            </div>`
+            )
+        }
+        ).join('')
     e.target.title.value = ''
+    counter.innerHTML = `${tickets.length}/${tickets.length}`
 
 })
 
@@ -47,9 +56,33 @@ const changeStatus = (id) => {
 
 }
 
+filter.addEventListener('change', (e)=>{
+    const filterValue = e.target.value
+    
+    filteredTickets = filterValue === 'all' ? tickets : tickets.filter((ticket) => ticket.status === filterValue)
+    console.log(filteredTickets);
 
-const filterTickets = (status) => {
-
-}
+    if(filteredTickets.length) {
+        box.innerHTML = filteredTickets.map((ticket) => 
+        {
+            return (
+            `<div class="quest">
+                <p id="quest-title">${ticket.title}</p>
+                <p id="quest-priority">${ticket.priority}</p>
+               <select onchange="changeStatus(${ticket.id})" id="status" name="status">
+    <option value="new" ${ticket.status === 'new' ? 'selected' : ''}>new</option>
+    <option value="doing" ${ticket.status === 'doing' ? 'selected' : ''}>doing</option>
+    <option value="done" ${ticket.status === 'done' ? 'selected' : ''}>done</option>
+</select>
+            </div>`
+            )
+        }
+        ).join('')
+    } else {
+        box.innerHTML = "No matches elements"
+    }
+    
+    counter.innerHTML = `${filteredTickets.length}/${tickets.length}`
+})
 
 
